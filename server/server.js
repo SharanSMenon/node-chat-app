@@ -23,9 +23,14 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
     console.log('New user connected')
     socket.on('join', (params, callback) => {
-        console.log(params)
         if (!isRealString(params['display']) || !isRealString(params['room'])) {
             return callback('Name and room name are required')
+        }
+        var userList = users.getUserList(params.room);
+        var match = userList.find(user => user === params['display'])
+        // console.log(match
+        if (match) {
+            return callback('Name is already taken in room')
         }
         socket.join(params['room']);
         users.addUser(socket.id, params['display'], params['room'])

@@ -38,23 +38,64 @@ socket.on('updateUserList', function(users) {
     
 })
 socket.on('newMessage', function (message) {
+    var params = jQuery.deparam(window.location.search);
+    var color;
+    var bgColor;
+    var spcolor;
+    if (message.from == "Admin"){
+        color = 'dodgerblue'
+        bgColor = '#eee'
+        spcolor = "#999"
+    } else if (message.from === params['display']){
+        color = 'white'
+        bgColor = 'dodgerblue'
+        spcolor = "#white"
+    } else {
+        color = 'black'
+        bgColor = '#eee'
+        spcolor = "#999"
+    }
     var formattedTime = moment(message.createdAt).format('h:mm a')
     var template = jQuery('#message-template').html()
     var html = Mustache.render(template, {
         text: message.text,
         from: message.from,
-        createdAt:formattedTime
+        createdAt:formattedTime,
+        color: color,
+        bgColor:bgColor,
+        spcolor:spcolor
     })
     jQuery("#messages").append(html);
     scrollToBottom()
 })
 socket.on('newLocationMessage', function(message){ 
     var formattedTime = moment(message.createdAt).format('h:mm a')
+    var color;
+    var bgColor;
+    var spcolor
+    var params = jQuery.deparam(window.location.search);
+    if (message.from == "Admin"){
+        color = 'dodgerblue'
+        bgColor = "#eee"
+        spcolor = "#999"
+    } else if (message.from === params['display']){
+        color = 'white'
+        bgColor = 'dodgerblue'
+        spcolor = "white"
+    } else {
+        color = 'black'
+        bgColor = '#eee'
+        spcolor = "#999"
+    }
     var template = jQuery('#location-message-template').html()
     var html = Mustache.render(template, {
         url: message.url,
         from: message.from,
-        createdAt:formattedTime
+        createdAt:formattedTime,
+        color:color,
+        bgColor:bgColor,
+        spcolor: spcolor
+
     })
     jQuery("#messages").append(html);
     scrollToBottom()

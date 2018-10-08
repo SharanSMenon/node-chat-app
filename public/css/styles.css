@@ -170,6 +170,7 @@ button:disabled {
 
 .message {
     padding: 10px;
+    margin-bottom:10px;
 }
 
 .message__title {
@@ -182,9 +183,6 @@ button:disabled {
     margin-right: 10px;
 }
 
-.message__title span {
-    color: #999;
-}
 
 @media (max-width: 600px) {
     * {
