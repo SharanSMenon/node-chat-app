@@ -42,20 +42,20 @@ io.on('connection', (socket) => {
     })
     socket.on('createMessage', (message, callback) => {
         var user = users.getUser(socket.id)
-        if (user && isRealString(message.text)){
+        if (user && isRealString(message.text)) {
             io.to(user.room).emit('newMessage', generateMessage(user.name, message.text))
         }
         callback()
     })
     socket.on('createLocationMessage', (coords) => {
         var user = users.getUser(socket.id)
-        if (user){
+        if (user) {
             io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords.latitude, coords.longitude))
         }
     })
     socket.on('disconnect', () => {
         var user = users.removeUser(socket.id);
-        if (user){
+        if (user) {
             io.to(user.room).emit('updateUserList', users.getUserList(user.room))
             io.to(user.room).emit('newMessage', generateMessage(
                 'Admin',

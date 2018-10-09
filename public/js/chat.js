@@ -31,8 +31,13 @@ socket.on('disconnect', function () {
 
 socket.on('updateUserList', function(users) { 
     var ol = jQuery('<ol></ol>');
+    var params = jQuery.deparam(window.location.search);
     users.forEach(function(user){
-        ol.append(jQuery('<li></li>').text(user))
+        if (user == params['display']){
+            ol.append(jQuery('<li></li>').text(user + " (you)").css("color","dodgerblue"))
+        }else{
+            ol.append(jQuery('<li></li>').text(user))
+        }
     })
     jQuery('#users').html(ol)
     
