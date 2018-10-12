@@ -1,11 +1,10 @@
-let mongoose = require('mongoose');
-
+const mongoose = require('mongoose')
 let User = mongoose.model('User', {
     _id: {
         type: String,
         required: true,
         minlength: 1,
-        trim: true,
+        trim: true
     },
     name: {
         type: String,
@@ -31,8 +30,7 @@ let User = mongoose.model('User', {
         minlength: 1,
         trim: true,
     }],
-});
-
-module.exports = {
+})
+module.exports= {
     User
-};
+}
