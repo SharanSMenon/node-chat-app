@@ -47,18 +47,22 @@ socket.on('newMessage', function (message) {
     var color;
     var bgColor;
     var spcolor;
+    var attach;
     if (message.from == "Admin"){
         color = 'dodgerblue'
         bgColor = '#eee'
         spcolor = "#999"
+        attach = ""
     } else if (message.from === params['display']){
         color = 'white'
         bgColor = 'dodgerblue'
         spcolor = "#white"
+        attach = "(you)"
     } else {
         color = 'black'
         bgColor = '#eee'
         spcolor = "#999"
+        attach = ""
     }
     var formattedTime = moment(message.createdAt).format('h:mm a')
     var template = jQuery('#message-template').html()
@@ -68,7 +72,8 @@ socket.on('newMessage', function (message) {
         createdAt:formattedTime,
         color: color,
         bgColor:bgColor,
-        spcolor:spcolor
+        spcolor:spcolor,
+        attach: attach
     })
     jQuery("#messages").append(html);
     scrollToBottom()
@@ -78,19 +83,23 @@ socket.on('newLocationMessage', function(message){
     var color;
     var bgColor;
     var spcolor
+    var attach
     var params = jQuery.deparam(window.location.search);
     if (message.from == "Admin"){
         color = 'dodgerblue'
         bgColor = "#eee"
         spcolor = "#999"
+        attach = ""
     } else if (message.from === params['display']){
         color = 'white'
         bgColor = 'dodgerblue'
         spcolor = "white"
+        attach = "(you)"
     } else {
         color = 'black'
         bgColor = '#eee'
         spcolor = "#999"
+        attach = ""
     }
     var template = jQuery('#location-message-template').html()
     var html = Mustache.render(template, {
@@ -99,7 +108,8 @@ socket.on('newLocationMessage', function(message){
         createdAt:formattedTime,
         color:color,
         bgColor:bgColor,
-        spcolor: spcolor
+        spcolor: spcolor,
+        attach:attach
 
     })
     jQuery("#messages").append(html);
