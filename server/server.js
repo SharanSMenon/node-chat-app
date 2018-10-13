@@ -79,6 +79,7 @@ io.on('connection', (socket) => {
                         message
                     });
                 })));
+                result = _.sortBy(result, 'time');
                 result.forEach(item => {
                     if (item.name !== "Admin"){
                         if (item.message.includes("https://www.google.com/maps?q")){
