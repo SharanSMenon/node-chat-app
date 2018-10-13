@@ -80,12 +80,21 @@ io.on('connection', (socket) => {
                     });
                 })));
                 result.forEach(item => {
-                    console.log(item)
-                    socket.emit('newMessage', {
-                        from: item.name,
-                        text: item.message,
-                        createdAt: item.time
-                    })
+                    if (item.name !== "Admin"){
+                        if (item.message.includes("https://www.google.com/maps?q")){
+                            socket.emit('newLocationMessage',{
+                                from:item.name,
+                                url:item.message,
+                                createdAt: item.time
+                            })
+                        } else {
+                            socket.emit('newMessage', {
+                                from: item.name,
+                                text: item.message,
+                                createdAt: item.time
+                            })
+                        }
+                    }
                 });
             })
         socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'))
@@ -138,7 +147,7 @@ io.on('connection', (socket) => {
                         _id:user.id,
                         name:user.name,
                         room:user.room,
-                        message: `<a href=${msg.url}><a>`,
+                        message:msg.url,
                         createdAt: time
                     }).save()
                 }
