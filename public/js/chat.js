@@ -64,7 +64,7 @@ socket.on('newMessage', function (message) {
         spcolor = "#999"
         attach = ""
     }
-    var formattedTime = moment(message.createdAt).format('h:mm a')
+    var formattedTime = moment(message.createdAt).format('MMMM Do YYYY (h:mm a)')
     var template = jQuery('#message-template').html()
     var html = Mustache.render(template, {
         text: message.text,
@@ -79,7 +79,7 @@ socket.on('newMessage', function (message) {
     scrollToBottom()
 })
 socket.on('newLocationMessage', function(message){ 
-    var formattedTime = moment(message.createdAt).format('h:mm a')
+    var formattedTime = moment(message.createdAt).format('MMMM Do YYYY (h:mm a)')
     var color;
     var bgColor;
     var spcolor
