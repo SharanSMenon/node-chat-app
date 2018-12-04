@@ -72,6 +72,7 @@ io.on('connection', (socket) => {
             })
             .select('-_id -room -__v')
             .exec((err, users) => {
+                // console.log(users)
                 let result = _.flatten(users.map(user => _.zipWith(_.fill(Array(user.createdAt.length), user.name), user.createdAt, user.message, (name, time, message) => {
                     return _.defaults({
                         name,
@@ -80,7 +81,6 @@ io.on('connection', (socket) => {
                     });
                 })));
                 result = _.sortBy(result, 'time');
-                // console.log(result)
                 result.forEach(item => {
                     if (item.name !== "Admin"){
                         if (item.message.includes("https://www.google.com/maps?q")){
